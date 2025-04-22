@@ -1,6 +1,6 @@
 from collections import deque
 
-puzzle_input = 
+puzzle_input = ''''''
 def part1(puzzle_input):
     disk = deque([int(size) for size in puzzle_input])
     left_id = 0
