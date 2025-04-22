@@ -1,54 +1,4 @@
-import itertools
-
-def evaluate_expression(numbers, operators):
-    # Evaluate the expression with left-to-right precedence
-    result = numbers[0]
-    for i in range(1, len(numbers)):
-        if operators[i-1] == '+':
-            result += numbers[i]
-        elif operators[i-1] == '*':
-            result *= numbers[i]
-    return result
-
-def parse_input(input_str):
-    # Split the input string by newlines and then process each line
-    input_lines = input_str.strip().split("\n")
-    
-    # Create an array of tuples: (test_value, numbers_list)
-    parsed_data = []
-    
-    for line in input_lines:
-        # Split each line at the colon
-        test_value, numbers_str = line.split(":")
-        test_value = int(test_value.strip())  # Convert test value to integer
-        numbers = list(map(int, numbers_str.split()))  # Convert numbers to integers
-        parsed_data.append((test_value, numbers))
-    
-    return parsed_data
-
-def solve_day_7(input_str):
-    # Parse the input into an array of tuples
-    parsed_data = parse_input(input_str)
-    
-    total_calibration_result = 0
-
-    for test_value, numbers in parsed_data:
-        # Generate all possible combinations of operators (+ or *)
-        num_operators = len(numbers) - 1
-        possible_operators = list(itertools.product('+-', repeat=num_operators))
-
-        # Check if any combination of operators results in the test value
-        for operators in possible_operators:
-            # Evaluate expression for current set of operators
-            if evaluate_expression(numbers, operators) == test_value:
-                total_calibration_result += test_value
-                break  # No need to check further for this line
-
-    return total_calibration_result
-
-# Example input string
-input_str = """
-12427056279: 3 5 3 8 3 22 1 651 5 3 1 6
+puzzle_input = '''12427056279: 3 5 3 8 3 22 1 651 5 3 1 6
 554266023266: 835 7 40 9 7 66 323 3 6
 156802: 957 23 8 2 5
 451396: 2 21 3 3 4 969 8 8 3 11 4
@@ -897,9 +847,37 @@ input_str = """
 722534456: 2 8 8 9 9 3 9 980 3 3 3 3
 885: 2 6 5 68 1
 82339793544: 8 2 33 9 7 93 5 44
-56161976: 11 66 47 463 75
-"""
+56161976: 11 66 47 463 75'''
 
-# Solve the problem
-result = solve_day_7(input_str)
-print(result)  # Output the total calibration result
+def part1(puzzle_input):
+
+    def is_valid(target, nums):
+        n = len(nums)
+        queue = [(1, nums[0])]
+        while queue:
+            i, val = queue.pop()
+            if i == n:
+                if val == target:
+                    return True
+                continue
+
+            possibilities = [
+                val + nums[i],
+                val * nums[i],
+            ]
+            for p in possibilities:
+                if p <= target:
+                    queue.append((i+1, p))
+
+        return False
+
+    total = 0
+    for line in puzzle_input.split('\n'):
+        left, right = line.split(': ')
+        target = int(left)
+        nums = [int(num) for num in right.split()]
+        if is_valid(target, nums):
+            total += target
+
+    return total
+print(part1(puzzle_input))
