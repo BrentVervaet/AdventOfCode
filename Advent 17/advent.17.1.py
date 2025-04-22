@@ -1,5 +1,10 @@
 import re
 
+puzzle_input = '''Register A: 27334280
+Register B: 0
+Register C: 0
+
+Program: 2,4,1,2,7,5,0,3,1,7,4,1,5,5,3,0'''
 
 def part1(puzzle_input):
     register, program = puzzle_input.split('\n\n')
@@ -41,3 +46,4 @@ def part1(puzzle_input):
         i += 2
 
     return ','.join(str(i) for i in out)
+print(part1(puzzle_input))
