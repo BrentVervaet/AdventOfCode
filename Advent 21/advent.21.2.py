@@ -1,5 +1,10 @@
 from functools import cache
 
+puzzle_input = '''593A
+508A
+386A
+459A
+246A'''
 
 def part2(puzzle_input):
     numpad  = {
@@ -43,3 +48,4 @@ def part2(puzzle_input):
         total_complexity += int(button_presses[:-1]) * get_length(button_presses, 26, True)
 
     return total_complexity
+print(part2(puzzle_input))

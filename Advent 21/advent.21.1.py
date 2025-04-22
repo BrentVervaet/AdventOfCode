@@ -1,3 +1,9 @@
+puzzle_input = '''593A
+508A
+386A
+459A
+246A'''
+
 def part1(puzzle_input):
     numpad  = {
         '7': (0, 0), '8': (0, 1), '9': (0, 2),
@@ -39,3 +45,4 @@ def part1(puzzle_input):
         total_complexity += int(button_presses[:-1]) * len(conversion)
 
     return total_complexity
+print(part1(puzzle_input))
